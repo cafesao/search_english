@@ -1,29 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { selectDefault } from './helper/valueDefault'
 
-function searchAll(word: string, select: any) {
-  const objMap: any = {
-    googleTranslate: `https://translate.google.com.br/?hl=pt-BR&sl=en&tl=pt&text=${word}&op=translate`,
-    linguee: `https://www.linguee.com.br/portugues-ingles/search?source=auto&query=${word}`,
-    googleImage: `https://www.google.com/search?q=${word}&tbm=isch`,
-    tatoeba: `https://tatoeba.org/pt-br/sentences/search?from=eng&query=${word}&to=por`,
-    thesaurus: `https://thesaurus.plus/thesaurus/${word}`,
-    forvo: `https://forvo.com/word/${word}/#en`,
-  }
-  Object.keys(select)
-    .filter((value) => select[value] === true)
-    .map((value) => window.open(objMap[value], '_blank', 'noreferrer'))
-}
+import searchAll from './helper/searchAll'
 
 function App() {
   const [word, setWord] = useState('')
-  const [select, setSelect] = useState({
-    googleTranslate: true,
-    linguee: true,
-    googleImage: true,
-    tatoeba: true,
-    thesaurus: true,
-    forvo: true,
-  })
+  const [select, setSelect] = useState(selectDefault)
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -130,14 +112,7 @@ function App() {
               className="btn btn-primary mt-5"
               onClick={() => {
                 searchAll(word, select)
-                setSelect({
-                  googleTranslate: true,
-                  linguee: true,
-                  googleImage: true,
-                  tatoeba: true,
-                  thesaurus: true,
-                  forvo: true,
-                })
+                setSelect(selectDefault)
                 setWord('')
               }}
             >
